@@ -1,0 +1,29 @@
+experiment_name: wav2vec_ravdess_speaker_independent_v1
+
+metadata_path: data/metadata/ravdess_metadata.csv
+output_dir: artifacts/checkpoints/wav2vec_ravdess_speaker_independent_v1
+
+backbone_name: facebook/wav2vec2-base
+sample_rate: 16000
+
+batch_size: 2
+eval_batch_size: 4
+num_workers: 0
+
+learning_rate: 2.0e-5
+weight_decay: 0.01
+warmup_ratio: 0.1
+num_epochs: 12
+early_stopping_patience: 4
+gradient_accumulation_steps: 1
+
+dropout: 0.2
+seed: 42
+
+freeze_feature_encoder: false
+freeze_feature_encoder_epochs: 1
+use_class_weights: false
+
+max_train_samples:
+max_val_samples:
+max_test_samples:
