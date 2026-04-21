@@ -244,13 +244,13 @@ def run_training(config: dict[str, Any], dry_run: bool = False) -> None:
     set_seed(int(config["seed"]))
 
     dataloaders, label_encoder, feature_extractor = build_dataloaders(config)
+    device = get_best_available_device()
 
     train_df = load_project_metadata(resolve_project_path(config["metadata_path"]), split="train")
     class_weights = None
     if bool(config.get("use_class_weights", False)):
         class_weights = compute_class_weights(train_df, label_encoder).to(device)
 
-    device = get_best_available_device()
     model = build_model(config, label_encoder).to(device)
 
     if dry_run:
