@@ -92,10 +92,12 @@ def build_projection_alignment_frame(
     reference_label: str = "neutral",
 ) -> pd.DataFrame:
     projection_df = artifacts.projection_summary.copy()
+    reference_direction_column = f"proj_to_{reference_label}_minus_neutral"
     direction_columns = [
         column
         for column in projection_df.columns
         if column.startswith("proj_to_") and column.endswith("_minus_neutral")
+        and column != reference_direction_column
     ]
 
     rows: list[dict[str, Any]] = []
