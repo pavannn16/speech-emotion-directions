@@ -247,12 +247,16 @@ def summarize_intensity_projections(intensity_projection_df: pd.DataFrame) -> pd
         )
 
     grouped = (
-        intensity_projection_df.groupby(["true_label", "intensity"], as_index=False)
-        .agg(
-            mean_expected_projection=("expected_projection", "mean"),
-            median_expected_projection=("expected_projection", "median"),
-            count=("expected_projection", "count"),
+        intensity_projection_df.groupby(["true_label", "intensity"])["expected_projection"]
+        .agg(["mean", "median", "count"])
+        .rename(
+            columns={
+                "mean": "mean_expected_projection",
+                "median": "median_expected_projection",
+                "count": "count",
+            }
         )
+        .reset_index()
     )
     return grouped
 
