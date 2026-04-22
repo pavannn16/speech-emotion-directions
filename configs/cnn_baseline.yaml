@@ -1,0 +1,32 @@
+experiment_name: cnn_baseline_ravdess_speaker_independent_v1
+
+metadata_path: data/metadata/ravdess_metadata.csv
+output_dir: artifacts/checkpoints/cnn_baseline_ravdess_speaker_independent_v1
+
+sample_rate: 16000
+n_mels: 64
+n_fft: 400
+hop_length: 160
+win_length: 400
+fmin: 0.0
+fmax: 8000.0
+target_frames: 600
+
+batch_size: 16
+eval_batch_size: 32
+num_workers: 0
+
+learning_rate: 1.0e-3
+weight_decay: 1.0e-4
+num_epochs: 30
+early_stopping_patience: 6
+
+dropout: 0.3
+hidden_dim: 128
+seed: 42
+
+use_class_weights: false
+
+max_train_samples:
+max_val_samples:
+max_test_samples:
