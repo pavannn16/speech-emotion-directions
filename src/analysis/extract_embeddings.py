@@ -82,8 +82,9 @@ def build_extraction_dataloader(
     sample_rate: int,
     batch_size: int,
     num_workers: int = 0,
+    raw_audio_root: str | Path | None = None,
 ) -> DataLoader:
-    metadata = load_project_metadata(metadata_path)
+    metadata = load_project_metadata(metadata_path, raw_audio_root=raw_audio_root)
     dataset = RavdessWav2VecDataset(metadata, label_encoder=label_encoder, sample_rate=sample_rate)
     collator = Wav2VecCollator(feature_extractor=feature_extractor, sample_rate=sample_rate)
     return DataLoader(
@@ -101,6 +102,7 @@ def extract_embeddings(
     batch_size: int | None = None,
     num_workers: int | None = None,
     device: torch.device | None = None,
+    raw_audio_root: str | Path | None = None,
 ) -> ExtractedEmbeddings:
     metadata_path = resolve_project_path(metadata_path)
     target_device = device or next(checkpoint.model.parameters()).device
@@ -115,6 +117,7 @@ def extract_embeddings(
         sample_rate=sample_rate,
         batch_size=eval_batch_size,
         num_workers=loader_workers,
+        raw_audio_root=raw_audio_root,
     )
 
     metadata_rows: list[dict[str, Any]] = []
@@ -209,6 +212,7 @@ def extract_and_save_embeddings(
     batch_size: int | None = None,
     num_workers: int | None = None,
     device: torch.device | None = None,
+    raw_audio_root: str | Path | None = None,
 ) -> Path:
     checkpoint = load_trained_checkpoint(checkpoint_dir, device=device)
     embeddings = extract_embeddings(
@@ -217,6 +221,7 @@ def extract_and_save_embeddings(
         batch_size=batch_size,
         num_workers=num_workers,
         device=device,
+        raw_audio_root=raw_audio_root,
     )
     return save_extracted_embeddings(
         embeddings=embeddings,
@@ -250,4 +255,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

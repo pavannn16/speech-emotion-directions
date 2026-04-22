@@ -28,7 +28,72 @@ class EmotionLabelEncoder:
         return self.id_to_label[int(label_id)]
 
 
-def load_project_metadata(metadata_path: str | Path, split: str | None = None) -> pd.DataFrame:
+def resolve_ravdess_audio_path(
+    file_path: str | Path,
+    actor_id: str,
+    file_name: str,
+    raw_audio_root: str | Path | None = None,
+) -> Path:
+    original_path = Path(file_path)
+    if original_path.exists():
+        return original_path.resolve()
+
+    if raw_audio_root is not None:
+        raw_audio_root = Path(raw_audio_root)
+        actor_folder = f"Actor_{str(actor_id).zfill(2)}"
+        candidates = [
+            raw_audio_root / actor_folder / file_name,
+            raw_audio_root / file_name,
+        ]
+        for candidate in candidates:
+            if candidate.exists():
+                return candidate.resolve()
+
+    return original_path
+
+
+def rebase_metadata_audio_paths(
+    metadata: pd.DataFrame,
+    raw_audio_root: str | Path | None = None,
+) -> pd.DataFrame:
+    if raw_audio_root is None or "file_path" not in metadata.columns:
+        return metadata
+
+    rebased = metadata.copy()
+    rebased_paths: list[str] = []
+    missing_rows: list[tuple[str, str, str]] = []
+
+    for row in rebased.itertuples(index=False):
+        resolved_path = resolve_ravdess_audio_path(
+            file_path=getattr(row, "file_path"),
+            actor_id=getattr(row, "actor_id"),
+            file_name=getattr(row, "file_name"),
+            raw_audio_root=raw_audio_root,
+        )
+        rebased_paths.append(str(resolved_path))
+        if not resolved_path.exists():
+            missing_rows.append((str(getattr(row, "actor_id")), str(getattr(row, "file_name")), str(resolved_path)))
+
+    rebased["file_path"] = rebased_paths
+
+    if missing_rows:
+        preview = ", ".join(
+            f"actor={actor_id} file={file_name} path={resolved_path}"
+            for actor_id, file_name, resolved_path in missing_rows[:5]
+        )
+        raise FileNotFoundError(
+            "Could not resolve one or more RAVDESS audio files in the current runtime. "
+            f"Examples: {preview}"
+        )
+
+    return rebased
+
+
+def load_project_metadata(
+    metadata_path: str | Path,
+    split: str | None = None,
+    raw_audio_root: str | Path | None = None,
+) -> pd.DataFrame:
     metadata_path = Path(metadata_path)
     df = pd.read_csv(metadata_path)
     df = df[df["keep_for_project"].astype(bool)].copy()
@@ -39,6 +104,7 @@ def load_project_metadata(metadata_path: str | Path, split: str | None = None) -
     if split is not None:
         df = df[df["split"] == split].copy()
 
+    df = rebase_metadata_audio_paths(df.reset_index(drop=True), raw_audio_root=raw_audio_root)
     return df.reset_index(drop=True)
 
 
@@ -55,6 +121,8 @@ def compute_class_weights(metadata: pd.DataFrame, label_encoder: EmotionLabelEnc
 
 def load_audio_array(audio_path: str | Path, sample_rate: int = 16_000) -> np.ndarray:
     audio_path = Path(audio_path)
+    if not audio_path.exists():
+        raise FileNotFoundError(f"Audio file not found: {audio_path}")
     waveform, original_sr = sf.read(audio_path)
 
     if waveform.ndim == 2:
@@ -141,4 +209,3 @@ class Wav2VecCollator:
         encoded["labels"] = labels
         encoded["metadata"] = metadata
         return encoded
-
