@@ -263,8 +263,6 @@ The model learns to predict emotion labels, but the prediction is mediated by hi
 ├── documentation/
 │   ├── README.md
 │   ├── research_report.md
-│   ├── presentation/
-│   │   └── presentation_plan.md
 │   └── assets/
 │       ├── figures/
 │       ├── notebook_text_outputs/
@@ -311,14 +309,12 @@ Recommended reading paths:
 - **Fast overview:** read this README, then `documentation/research_report.md`.
 - **Main results only:** notebooks `02`, `06`, `07`, `08`, `09`, `14`, `15`, `16`.
 - **Full reproducibility path:** run notebooks `01` through `16` in order.
-- **Presentation prep:** read `documentation/presentation/presentation_plan.md`.
 
 ## Documentation
 
 The `documentation/` directory contains the polished project deliverables:
 
 - `documentation/research_report.md`: detailed paper-style report.
-- `documentation/presentation/presentation_plan.md`: 30-minute, 5-person presentation plan.
 - `documentation/assets/figures/`: extracted notebook figures used in reports/slides.
 - `documentation/assets/tables/key_results.csv`: compact table of headline metrics.
 - `documentation/assets/tables/notebook_execution_status.csv`: execution/output status for each notebook.
