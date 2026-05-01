@@ -1,0 +1,17 @@
+notebook,code_cells,executed_code_cells,stored_errors,extracted_figures
+01_eda.ipynb,18,18,0,10
+02_wav2vec_finetuning.ipynb,6,6,0,0
+03_emotion_vector_analysis.ipynb,9,9,0,2
+04_final_results_summary.ipynb,8,8,0,2
+05_cnn_baseline_training.ipynb,6,6,0,0
+06_model_comparison.ipynb,7,7,0,2
+07_anthropic_style_emotion_vectors.ipynb,11,11,0,7
+08_direction_only_classification.ipynb,8,8,0,3
+09_causal_ablation_study.ipynb,9,9,0,4
+10_emotion_arithmetic.ipynb,7,7,0,3
+11_cross_dataset_transfer.ipynb,9,9,0,3
+12_layerwise_steering.ipynb,7,7,0,4
+13_sparse_autoencoder.ipynb,9,9,0,4
+14_mid_transformer_causal_intervention.ipynb,16,16,0,7
+15_activation_patching.ipynb,20,20,0,7
+16_robustness_and_negative_controls.ipynb,9,9,0,2

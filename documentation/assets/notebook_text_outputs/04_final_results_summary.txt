@@ -1,0 +1,140 @@
+# 04_final_results_summary
+
+## Cell 1
+Running in Colab: True
+Required analysis packages are already available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
+Using a clean code checkout because /content/speech-emotion-directions has local changes or local commits.
+ -  M data/metadata/ravdess_metadata.csv
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+Working directory: /content/speech-emotion-directions
+
+
+## Cell 2
+Checkpoint source: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+Analysis source: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis
+Local report dir: /content/speech-emotion-directions/artifacts/reports/wav2vec_ravdess_speaker_independent_v1
+Drive report dir: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/final_report
+
+
+## Cell 3
+Best layer summary: {'best_val_layer_index': 11, 'best_val_macro_f1': 0.7754696496465262, 'best_val_accuracy': 0.7836538461538461, 'final_layer_index': 12, 'final_test_macro_f1': 0.8237107663578253, 'final_test_accuracy': 0.8365384615384616}
+
+  split  accuracy  macro_f1  weighted_f1
+0   val    0.7885    0.7762       0.7842
+1  test    0.8269    0.8126       0.8210
+
+
+         neutral  happy  sad  angry  fearful  disgust
+neutral       47      0    1      0        0        0
+happy          3     24    0      4        1        0
+sad            4      1   24      0        0        3
+angry          0      1    0     31        0        0
+fearful        0      6    7      0       18        1
+disgust        0      0    0      4        0       28
+
+
+  true_label  count        expected_direction             top_direction  \
+0    neutral     48  all_non_neutral_negative  all_non_neutral_negative   
+1      happy     32                     happy                     happy   
+2        sad     32                       sad                       sad   
+3      angry     32                     angry                     angry   
+4    fearful     32                   fearful                   fearful   
+5    disgust     32                   disgust                   disgust   
+
+   top_score  matched_expectation  expected_score  
+0  -5.322003                 True             NaN  
+1   5.543578                 True        5.543578  
+2   5.244081                 True        5.244081  
+3   8.477932                 True        8.477932  
+4   6.814941                 True        6.814941  
+5   7.511742                 True        7.511742  
+
+
+  target_label  alpha  mean_target_prob_all  delta_target_prob_all  \
+0        happy    0.5                0.3586                 0.2052   
+1          sad    0.5                0.3616                 0.2104   
+2        angry    0.5                0.3777                 0.1907   
+3      fearful    0.5                0.2913                 0.1918   
+4      disgust    0.5                0.3169                 0.1626   
+
+   pred_as_target_rate_all  mean_target_prob_true_subset  \
+0                   0.3077                        0.8766   
+1                   0.3654                        0.9054   
+2                   0.3365                        0.9972   
+3                   0.2788                        0.7358   
+4                   0.2644                        0.9253   
+
+   delta_target_prob_true_subset  pred_as_target_rate_true_subset  
+0                         0.1719                           0.8750  
+1                         0.1883                           0.9688  
+2                         0.0335                           1.0000  
+3                         0.1738                           0.7500  
+4                         0.0666                           0.9062  
+
+
+<IPython.core.display.Markdown object>
+
+
+
+## Cell 4
+[figure: 04_final_results_summary_cell_04_fig_01_final_results_summary.png]
+
+<Figure size 700x600 with 1 Axes>
+
+
+
+## Cell 5
+[figure: 04_final_results_summary_cell_05_fig_02_final_results_summary.png]
+
+<Figure size 900x500 with 1 Axes>
+
+
+
+## Cell 6
+Total test samples: 208
+Misclassified samples: 36
+
+   true_label pred_label  count
+4     fearful        sad      7
+3     fearful      happy      6
+5       happy      angry      4
+1     disgust      angry      4
+11        sad    neutral      4
+7       happy    neutral      3
+9         sad    disgust      3
+0       angry      happy      1
+2     fearful    disgust      1
+6       happy    fearful      1
+
+
+
+## Cell 7
+Report directory: /content/speech-emotion-directions/artifacts/reports/wav2vec_ravdess_speaker_independent_v1
+final_results_summary.md
+misclassification_summary.csv
+overall_metrics.csv
+projection_alignment_summary.csv
+steering_delta_curves.png
+steering_selected_alpha_summary.csv
+test_confusion_matrix.csv
+test_confusion_matrix.png
+
+
+## Cell 8
+Backed up final report artifacts to Google Drive:
+ - /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/final_report
+
+Drive final report contents:
+ [file] final_results_summary.md
+ [file] misclassification_summary.csv
+ [file] overall_metrics.csv
+ [file] projection_alignment_summary.csv
+ [file] steering_delta_curves.png
+ [file] steering_selected_alpha_summary.csv
+ [file] test_confusion_matrix.csv
+ [file] test_confusion_matrix.png
+

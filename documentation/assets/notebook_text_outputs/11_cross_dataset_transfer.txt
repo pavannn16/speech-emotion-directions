@@ -1,0 +1,166 @@
+# 11_cross_dataset_transfer
+
+## Cell 1
+Running in Colab: True
+Required packages available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+
+
+## Cell 2
+Checkpoint: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+Analysis: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis
+Output: /content/speech-emotion-directions/artifacts/analysis/wav2vec_ravdess_speaker_independent_v1/cross_dataset_transfer
+
+
+## Cell 4
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+project_hid.bias             | UNEXPECTED |  | 
+project_q.weight             | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+quantizer.codevectors        | UNEXPECTED |  | 
+project_hid.weight           | UNEXPECTED |  | 
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+RAVDESS label order: ['neutral', 'happy', 'sad', 'angry', 'fearful', 'disgust']
+CREMA-D emotion mapping: {'ANG': 'angry', 'DIS': 'disgust', 'FEA': 'fearful', 'HAP': 'happy', 'NEU': 'neutral', 'SAD': 'sad'}
+
+
+## Cell 6
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'cfahlgren1/crema-d' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+ERROR:datasets.load:`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'cfahlgren1/crema-d' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+
+Loading CREMA-D dataset from Hugging Face: cfahlgren1/crema-d
+
+README.md: 0.00B [00:00, ?B/s]
+
+
+data/train-00000-of-00004.parquet:   0%|          | 0.00/160M [00:00<?, ?B/s]
+
+
+data/train-00001-of-00004.parquet:   0%|          | 0.00/148M [00:00<?, ?B/s]
+
+
+data/train-00002-of-00004.parquet:   0%|          | 0.00/146M [00:00<?, ?B/s]
+
+
+data/train-00003-of-00004.parquet:   0%|          | 0.00/152M [00:00<?, ?B/s]
+
+
+Generating train split:   0%|          | 0/7442 [00:00<?, ? examples/s]
+
+
+Loaded 7,442 samples from cfahlgren1/crema-d
+
+CREMA-D source: cfahlgren1/crema-d
+CREMA-D samples with matching RAVDESS emotions: 7,442
+
+final_label
+neutral    1087
+happy      1271
+sad        1271
+angry      1271
+fearful    1271
+disgust    1271
+Name: count, dtype: int64
+
+
+   dataset_index            file_name actor_id sentence emotion_code  \
+0              0  1001_DFA_ANG_XX.wav     1001      DFA          ANG   
+1              1  1001_DFA_DIS_XX.wav     1001      DFA          DIS   
+2              2  1001_DFA_FEA_XX.wav     1001      DFA          FEA   
+3              3  1001_DFA_HAP_XX.wav     1001      DFA          HAP   
+4              4  1001_DFA_NEU_XX.wav     1001      DFA          NEU   
+
+  final_label intensity_code  
+0       angry             XX  
+1     disgust             XX  
+2     fearful             XX  
+3       happy             XX  
+4     neutral             XX  
+
+
+
+## Cell 8
+Extracting CREMA-D embeddings: 100%|██████████| 7442/7442 [00:26<00:00, 279.03it/s]
+
+
+Extracted 7,442 embeddings, shape: (7442, 768)
+Skipped audio rows: 0
+
+
+## Cell 10
+           method                       dataset  accuracy  macro_f1  \
+0    trained_head  CREMA-D (cfahlgren1/crema-d)    0.3654    0.3498   
+1        centroid  CREMA-D (cfahlgren1/crema-d)    0.3624    0.3473   
+2  direction_only  CREMA-D (cfahlgren1/crema-d)    0.3600    0.3444   
+3    trained_head                RAVDESS (test)    0.8365    0.8237   
+4  direction_only                RAVDESS (test)    0.8365    0.8255   
+
+   weighted_f1  
+0       0.3473  
+1       0.3450  
+2       0.3421  
+3       0.8312  
+4       0.8320  
+
+
+
+## Cell 11
+[figure: 11_cross_dataset_transfer_cell_11_fig_01_transfer_evaluation.png]
+
+<Figure size 1800x500 with 3 Axes>
+
+
+[figure: 11_cross_dataset_transfer_cell_11_fig_02_transfer_evaluation.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+
+## Cell 13
+/usr/local/lib/python3.12/dist-packages/umap/umap_.py:1952: UserWarning: n_jobs value 1 overridden to 1 by setting random_state. Use no seed for parallelism.
+  warn(
+
+[figure: 11_cross_dataset_transfer_cell_13_fig_03_umap_ravdess_vs_crema_d_embeddings.png]
+
+<Figure size 1600x600 with 2 Axes>
+
+
+
+## Cell 14
+Backed up to: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/cross_dataset_transfer
+
+Output files:
+  cremad_confusion_matrices.png
+  cremad_embeddings.npz
+  cremad_metadata.csv
+  cremad_per_class_f1.csv
+  cremad_per_class_f1.png
+  transfer_comparison.csv
+  umap_ravdess_cremad.png
+

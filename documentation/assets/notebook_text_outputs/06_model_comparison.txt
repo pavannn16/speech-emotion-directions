@@ -1,0 +1,91 @@
+# 06_model_comparison
+
+## Cell 1
+Running in Colab: True
+Required analysis packages are already available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
+Using a clean code checkout because /content/speech-emotion-directions has local changes or local commits.
+ -  M data/metadata/ravdess_metadata.csv
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+Working directory: /content/speech-emotion-directions
+
+
+## Cell 2
+wav2vec checkpoint: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+cnn checkpoint: /content/drive/MyDrive/speech-emotion-directions/runs/cnn_baseline_ravdess_speaker_independent_v1/checkpoint
+comparison output dir: /content/speech-emotion-directions/artifacts/reports/wav2vec_vs_cnn_baseline
+drive comparison dir: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_vs_cnn_baseline/comparison_report
+
+
+## Cell 3
+          model                              experiment_name split  accuracy  \
+0      wav2vec2       wav2vec_ravdess_speaker_independent_v1   val    0.7885   
+1      wav2vec2       wav2vec_ravdess_speaker_independent_v1  test    0.8269   
+2  cnn_baseline  cnn_baseline_ravdess_speaker_independent_v1   val    0.4375   
+3  cnn_baseline  cnn_baseline_ravdess_speaker_independent_v1  test    0.4231   
+
+   macro_f1  weighted_f1  
+0    0.7762       0.7842  
+1    0.8126       0.8210  
+2    0.3722       0.3912  
+3    0.3241       0.3476  
+
+
+        metric  cnn_baseline  wav2vec2  absolute_gain
+0     accuracy        0.4231    0.8269         0.4038
+1     macro_f1        0.3241    0.8126         0.4885
+2  weighted_f1        0.3476    0.8210         0.4734
+
+
+     label  cnn_baseline  wav2vec2  absolute_gain
+0    happy        0.0488    0.7500         0.7012
+1      sad        0.0500    0.7500         0.7000
+2    angry        0.2927    0.8732         0.5806
+3  disgust        0.5455    0.8750         0.3295
+4  fearful        0.3784    0.7059         0.3275
+5  neutral        0.6294    0.9216         0.2922
+
+
+<IPython.core.display.Markdown object>
+
+
+
+## Cell 4
+[figure: 06_model_comparison_cell_04_fig_01_model_comparison.png]
+
+<Figure size 800x500 with 1 Axes>
+
+
+
+## Cell 5
+[figure: 06_model_comparison_cell_05_fig_02_model_comparison.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+
+## Cell 6
+Comparison report directory: /content/speech-emotion-directions/artifacts/reports/wav2vec_vs_cnn_baseline
+model_comparison_summary.md
+per_class_f1_comparison.csv
+per_class_f1_comparison.png
+split_metrics_comparison.csv
+test_macro_f1_comparison.png
+test_metric_gains.csv
+
+
+## Cell 7
+Backed up comparison artifacts to Google Drive:
+ - /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_vs_cnn_baseline/comparison_report
+
+Drive comparison contents:
+ [file] model_comparison_summary.md
+ [file] per_class_f1_comparison.csv
+ [file] per_class_f1_comparison.png
+ [file] split_metrics_comparison.csv
+ [file] test_macro_f1_comparison.png
+ [file] test_metric_gains.csv
+

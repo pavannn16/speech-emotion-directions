@@ -73,7 +73,7 @@ def evaluate_direction_classifier(
         "macro_f1": float(f1_score(label_ids, preds, average="macro")),
         "weighted_f1": float(f1_score(label_ids, preds, average="weighted")),
         "classification_report": classification_report(
-            label_ids, preds, target_names=label_names, output_dict=True,
+            label_ids, preds, target_names=label_names, output_dict=True, zero_division=0,
         ),
         "predictions": preds,
     }
@@ -203,7 +203,7 @@ def per_class_ablation_impact(
     vs when other directions are removed."""
     base_probs = linear_classifier_probabilities(embeddings, classifier_weight, classifier_bias)
     base_preds = base_probs.argmax(axis=1)
-    base_report = classification_report(label_ids, base_preds, target_names=label_names, output_dict=True)
+    base_report = classification_report(label_ids, base_preds, target_names=label_names, output_dict=True, zero_division=0)
 
     rows: list[dict[str, Any]] = []
     for ablated_idx, ablated_name in enumerate(label_names):
@@ -212,7 +212,7 @@ def per_class_ablation_impact(
         ablated = ablate_direction_component(embeddings, directions[ablated_idx])
         probs = linear_classifier_probabilities(ablated, classifier_weight, classifier_bias)
         preds = probs.argmax(axis=1)
-        report = classification_report(label_ids, preds, target_names=label_names, output_dict=True)
+        report = classification_report(label_ids, preds, target_names=label_names, output_dict=True, zero_division=0)
         for eval_name in label_names:
             rows.append({
                 "ablated_direction": ablated_name,
@@ -360,7 +360,7 @@ def evaluate_transfer_directions(
         "macro_f1": float(f1_score(label_ids, preds, average="macro")),
         "weighted_f1": float(f1_score(label_ids, preds, average="weighted")),
         "classification_report": classification_report(
-            label_ids, preds, target_names=label_names, output_dict=True,
+            label_ids, preds, target_names=label_names, output_dict=True, zero_division=0,
         ),
         "predictions": preds,
     }

@@ -1,0 +1,177 @@
+# 16_robustness_and_negative_controls
+
+## Cell 1
+Running in Colab: True
+Required packages available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+
+
+## Cell 2
+Checkpoint: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+Analysis  : /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis
+Output    : /content/speech-emotion-directions/artifacts/analysis/wav2vec_ravdess_speaker_independent_v1/robustness_controls
+
+
+## Cell 3
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+quantizer.codevectors        | UNEXPECTED |  | 
+project_hid.weight           | UNEXPECTED |  | 
+project_hid.bias             | UNEXPECTED |  | 
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+project_q.weight             | UNEXPECTED |  | 
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Test samples: 208
+Labels: ['neutral', 'happy', 'sad', 'angry', 'fearful', 'disgust']
+Final layer index: 12
+
+
+## Cell 5
+                              quantity                            metric  \
+0                         trained_head                          accuracy   
+1                         trained_head                          macro_f1   
+2       direction_prototype_controlled                          accuracy   
+3       direction_prototype_controlled                          macro_f1   
+4   real_remove_all_direction_ablation        macro_f1_delta_vs_baseline   
+5  final_layer_real_direction_steering  mean_delta_target_prob_alpha_0.5   
+
+    point  ci_low  ci_high  
+0  0.8365  0.7885   0.8846  
+1  0.8237  0.7688   0.8762  
+2  0.8413  0.7885   0.8894  
+3  0.8301  0.7703   0.8796  
+4 -0.2889 -0.3395  -0.2487  
+5  0.1921  0.1800   0.2043  
+
+
+
+## Cell 7
+                        control_family                            metric  \
+0         norm_matched_random_ablation        macro_f1_delta_vs_baseline   
+1         norm_matched_random_steering  mean_delta_target_prob_alpha_0.5   
+2  shuffled_label_direction_classifier                          macro_f1   
+
+   real_value  null_mean  null_ci_low  null_ci_high  \
+0     -0.2889     0.0002       0.0000        0.0038   
+1      0.1921     0.0002      -0.0031        0.0037   
+2      0.8301     0.1524       0.0138        0.3742   
+
+   fraction_null_as_or_more_damaging  fraction_null_as_or_more_positive  
+0                                0.0                                NaN  
+1                                NaN                                0.0  
+2                                NaN                                0.0  
+
+
+
+## Cell 9
+  actor_id   n  trained_accuracy  trained_macro_f1  direction_accuracy  \
+0       21  52            0.8654            0.8529              0.8846   
+1       22  52            0.8077            0.7832              0.7885   
+2       23  52            0.8269            0.7985              0.8269   
+3       24  52            0.8462            0.8519              0.8654   
+
+   direction_macro_f1  ablation_macro_f1_delta  
+0              0.8771                  -0.2075  
+1              0.7677                  -0.2466  
+2              0.7985                  -0.4353  
+3              0.8725                  -0.3360  
+
+
+[figure: 16_robustness_and_negative_controls_cell_09_fig_01_3_per_test_actor_sensitivity.png]
+
+<Figure size 1300x480 with 2 Axes>
+
+
+
+## Cell 11
+Patch-transfer CIs computed from: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/activation_patching/experiment_1_patch_sweep.csv
+Patch control summary found: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/activation_patching/experiment_6_patch_controls_summary.csv
+
+                           intervention  count  mean_delta_p_src  \
+0  same_emotion_different_context_patch    640            0.7328   
+1               full_same_context_patch    640            0.6796   
+2             direction_component_patch    640            0.6395   
+3             orthogonal_residual_patch    640            0.0533   
+4           self_patch_negative_control    640            0.0002   
+5        random_source_negative_control    640           -0.0146   
+
+   median_delta_p_src  flip_rate  
+0              0.9599     0.8078  
+1              0.9385     0.7562  
+2              0.8967     0.7266  
+3              0.0015     0.1094  
+4              0.0000     0.0531  
+5             -0.0002     0.0406  
+
+
+Mid-transformer random-vector control summary found: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/mid_transformer_causal_trace/random_vector_sufficiency_control_summary.csv
+
+  target_label  real_delta_target_prob_all  random_mean_delta  \
+0        angry                      0.2991             0.0023   
+1      disgust                      0.2901            -0.0057   
+2      fearful                      0.3262            -0.0004   
+3        happy                      0.1354             0.0066   
+4          sad                      0.2217             0.0086   
+
+   random_q05_delta  random_q95_delta  fraction_random_ge_real  
+0           -0.0096            0.0126                      0.0  
+1           -0.0226            0.0154                      0.0  
+2           -0.0125            0.0171                      0.0  
+3           -0.0057            0.0214                      0.0  
+4           -0.0061            0.0205                      0.0  
+
+
+                                  quantity  layer_index            metric  \
+0  activation_patch_best_layer_delta_p_src           11  mean_delta_p_src   
+1    activation_patch_best_layer_flip_rate           11         flip_rate   
+
+    point  ci_low  ci_high  
+0  0.6796  0.6475   0.7092  
+1  0.7562  0.7219   0.7891  
+
+
+
+## Cell 13
+[figure: 16_robustness_and_negative_controls_cell_13_fig_02_5_visual_summary.png]
+
+<Figure size 1800x480 with 3 Axes>
+
+
+
+## Cell 14
+Wrote: /content/speech-emotion-directions/artifacts/analysis/wav2vec_ravdess_speaker_independent_v1/robustness_controls/robustness_summary.json
+Backed up to: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/robustness_controls
+
+Output files:
+  bootstrap_confidence_intervals.csv
+  causal_output_confidence_intervals.csv
+  copied_mid_random_vector_control_summary.csv
+  copied_patch_control_summary.csv
+  negative_control_draws.csv
+  negative_control_summary.csv
+  negative_control_summary_panels.png
+  per_test_actor_sensitivity.csv
+  per_test_actor_sensitivity.png
+  robustness_summary.json
+

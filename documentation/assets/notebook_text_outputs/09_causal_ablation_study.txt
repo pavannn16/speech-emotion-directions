@@ -1,0 +1,137 @@
+# 09_causal_ablation_study
+
+## Cell 1
+Running in Colab: True
+Required packages available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+
+
+## Cell 2
+Checkpoint: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+Analysis: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis
+Output: /content/speech-emotion-directions/artifacts/analysis/wav2vec_ravdess_speaker_independent_v1/causal_ablation
+
+
+## Cell 3
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+project_hid.bias             | UNEXPECTED |  | 
+quantizer.codevectors        | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+project_q.weight             | UNEXPECTED |  | 
+project_hid.weight           | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Test samples: 208, Directions shape: (6, 768)
+
+
+## Cell 5
+         ablation  accuracy  macro_f1  weighted_f1
+0            none    0.8365    0.8237       0.8312
+1    remove_happy    0.7019    0.6946       0.6925
+2      remove_sad    0.7356    0.6680       0.6748
+3    remove_angry    0.6923    0.6440       0.6457
+4  remove_fearful    0.7356    0.6676       0.6753
+5  remove_disgust    0.7404    0.7165       0.7184
+6      remove_all    0.5192    0.5348       0.4936
+
+
+
+Removing all directions: Macro F1 drops from 0.8237 to 0.5348 (-0.2889)
+This is a 35.1% relative drop.
+
+
+## Cell 6
+[figure: 09_causal_ablation_study_cell_06_fig_01_overall_ablation_results.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+
+## Cell 8
+   baseline_macro_f1  real_remove_all_macro_f1  real_delta_vs_baseline  \
+0             0.8237                    0.5348                 -0.2889   
+
+   random_mean_delta_vs_baseline  random_05pct_delta_vs_baseline  \
+0                         0.0003                             0.0   
+
+   random_95pct_delta_vs_baseline  fraction_random_as_damaging_as_real  
+0                          0.0038                                  0.0  
+
+
+[figure: 09_causal_ablation_study_cell_08_fig_02_random_direction_ablation_control.png]
+
+<Figure size 900x500 with 1 Axes>
+
+
+
+## Cell 10
+/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.12/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+
+evaluated_class     angry  disgust  fearful   happy  neutral     sad
+ablated_direction                                                   
+angry             -0.8251   0.0168  -0.0138  0.0441  -0.2549 -0.0455
+disgust           -0.0246  -0.4923   0.0239  0.0379  -0.1802 -0.0083
+fearful            0.0000   0.0000  -0.7308  0.0036  -0.1537 -0.0560
+happy              0.0032   0.0000  -0.0271 -0.4397  -0.2549 -0.0560
+sad                0.0000  -0.0266   0.0239 -0.0037  -0.1657 -0.7619
+
+
+[figure: 09_causal_ablation_study_cell_10_fig_03_per_class_ablation_impact_cross_impact_matrix.png]
+
+<Figure size 900x600 with 2 Axes>
+
+
+
+## Cell 12
+[figure: 09_causal_ablation_study_cell_12_fig_04_ablation_strength_sweep.png]
+
+<Figure size 1400x500 with 2 Axes>
+
+
+
+## Cell 13
+Backed up to: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/causal_ablation
+
+Output files:
+  ablation_cross_impact_heatmap.png
+  ablation_macro_f1.png
+  ablation_strength_sweep.csv
+  ablation_strength_sweep.png
+  ablation_summary.csv
+  per_class_ablation_impact.csv
+  random_direction_ablation_control.csv
+  random_direction_ablation_control.png
+  random_direction_ablation_control_summary.csv
+

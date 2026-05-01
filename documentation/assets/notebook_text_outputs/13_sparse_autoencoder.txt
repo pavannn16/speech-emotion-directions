@@ -1,0 +1,212 @@
+# 13_sparse_autoencoder
+
+## Cell 1
+Running in Colab: True
+Required packages available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+
+
+## Cell 2
+Embedding shape: (1248, 768)
+Train: 832, Test: 208
+
+
+## Cell 4
+Training sparse autoencoder...
+
+[figure: 13_sparse_autoencoder_cell_04_fig_01_train_sparse_autoencoder.png]
+
+<Figure size 1000x400 with 1 Axes>
+
+
+Final loss: 12.5602
+
+
+## Cell 6
+Dictionary size: 2048
+Active features (ever fire): 2048 / 2048
+Mean active features per sample: 911.2 (44.5%)
+Median active features per sample: 910
+
+[figure: 13_sparse_autoencoder_cell_06_fig_02_analyze_sae_activations.png]
+
+<Figure size 800x400 with 1 Axes>
+
+
+
+## Cell 8
+
+--- NEUTRAL ---
+
+   rank  feature_index  selectivity_ratio  class_mean_activation  \
+0     1           2013              4.162                  2.707   
+1     2           1964              4.130                  1.402   
+2     3           1853              4.104                  2.526   
+3     4           1079              4.078                  2.020   
+4     5           1773              4.066                  1.286   
+
+   activation_rate  
+0            0.255  
+1            0.263  
+2            0.276  
+3            0.294  
+4            0.287  
+
+
+
+--- HAPPY ---
+
+    rank  feature_index  selectivity_ratio  class_mean_activation  \
+10     1            754              5.727                  1.576   
+11     2           1521              5.526                  2.296   
+12     3            348              5.506                  3.106   
+13     4           1504              5.491                  1.443   
+14     5           1563              5.482                  2.528   
+
+    activation_rate  
+10            0.255  
+11            0.300  
+12            0.267  
+13            0.298  
+14            0.256  
+
+
+
+--- SAD ---
+
+    rank  feature_index  selectivity_ratio  class_mean_activation  \
+20     1            208              5.762                  2.947   
+21     2             47              5.612                  1.421   
+22     3             10              5.602                  2.078   
+23     4             34              5.562                  2.435   
+24     5           1774              5.449                  1.578   
+
+    activation_rate  
+20            0.201  
+21            0.249  
+22            0.242  
+23            0.278  
+24            0.317  
+
+
+
+--- ANGRY ---
+
+    rank  feature_index  selectivity_ratio  class_mean_activation  \
+30     1            352              6.010                  2.433   
+31     2           1294              6.001                  3.871   
+32     3            122              5.938                  2.759   
+33     4           1817              5.930                  2.720   
+34     5            961              5.926                  2.225   
+
+    activation_rate  
+30            0.248  
+31            0.226  
+32            0.208  
+33            0.284  
+34            0.259  
+
+
+
+--- FEARFUL ---
+
+    rank  feature_index  selectivity_ratio  class_mean_activation  \
+40     1            944              6.083                  2.564   
+41     2            251              6.051                  2.614   
+42     3           1982              5.993                  1.923   
+43     4            886              5.970                  2.449   
+44     5           1221              5.964                  2.295   
+
+    activation_rate  
+40            0.196  
+41            0.202  
+42            0.215  
+43            0.271  
+44            0.210  
+
+
+
+--- DISGUST ---
+
+    rank  feature_index  selectivity_ratio  class_mean_activation  \
+50     1           1559              6.011                  3.083   
+51     2            371              5.958                  3.295   
+52     3           1487              5.955                  2.053   
+53     4           1808              5.913                  2.218   
+54     5            652              5.896                  1.829   
+
+    activation_rate  
+50            0.245  
+51            0.257  
+52            0.240  
+53            0.224  
+54            0.268  
+
+
+
+## Cell 10
+[figure: 13_sparse_autoencoder_cell_10_fig_03_feature_emotion_heatmap.png]
+
+<Figure size 1000x900 with 2 Axes>
+
+
+
+## Cell 12
+Test MSE (normalized space): 0.1363
+Test mean cosine similarity: 0.9390
+Test median cosine similarity: 0.9662
+
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+project_hid.weight           | UNEXPECTED |  | 
+quantizer.codevectors        | UNEXPECTED |  | 
+project_q.weight             | UNEXPECTED |  | 
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+project_hid.bias             | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+              source  accuracy  macro_f1
+0           original    0.8365    0.8237
+1  sae_reconstructed    0.8365    0.8222
+
+
+
+## Cell 14
+[figure: 13_sparse_autoencoder_cell_14_fig_04_feature_activation_distributions.png]
+
+<Figure size 1500x800 with 6 Axes>
+
+
+
+## Cell 15
+Backed up to: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/sparse_autoencoder
+
+Output files:
+  sae_feature_emotion_heatmap.png
+  sae_reconstruction_metrics.csv
+  sae_sparsity_histogram.png
+  sae_top_feature_distributions.png
+  sae_top_features_per_emotion.csv
+  sae_training_loss.png
+  sae_weights.npz
+

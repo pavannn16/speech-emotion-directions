@@ -1,0 +1,32 @@
+category,metric,value,notes
+Dataset,Total RAVDESS speech clips,1440,Original audio-only speech clips discovered
+Dataset,Final project clips,1248,Six-class setup after mapping calm to neutral and dropping surprised
+Dataset,Speaker-independent split,"train actors 01-16, val 17-20, test 21-24",No speaker overlap across splits
+Fine-tuned wav2vec2,Validation accuracy / macro F1,0.7885 / 0.7762,Primary supervised SER model selected by validation macro F1
+Fine-tuned wav2vec2,Test accuracy / macro F1,0.8269 / 0.8126,Canonical supervised performance from notebook 02/06
+CNN baseline,Test accuracy / macro F1,0.4231 / 0.3241,Mel-spectrogram CNN baseline
+Model comparison,wav2vec2 macro-F1 gain over CNN,+0.4885,Large gain motivates interpreting wav2vec2 hidden states rather than relying on handcrafted features
+Latent directions,Controlled direction-only test accuracy / macro F1,0.8413 / 0.8301,Projection-only classifier using actor/statement controlled directions
+Latent directions,Shuffled-label direction macro F1,0.0151,Notebook 08 direct shuffled baseline
+Latent directions,Shuffled-label bootstrap null macro F1,0.1524 [0.0138, 0.3742],Notebook 16 repeated shuffled-label control
+Projection correlations,"Pearson r, all test samples",0.6812-0.7711,Projection onto a direction correlates with target probability
+Projection correlations,"Pearson r, true-class subsets",0.6701-0.9525,Expected direction magnitude tracks confidence within target-emotion examples
+Same-context displacement,Mean cosine to expected direction,0.8203-0.9686,"Same actor, sentence, repetition, intensity; only emotion changes"
+Intensity check,Strong-minus-normal projection shift,positive for all five non-neutral emotions,Strong acted intensity generally projects farther along the same emotion direction
+Final-layer steering,Mean target-probability delta at alpha 0.5,+0.1921 [0.1800, 0.2043],Bootstrap CI from notebook 16
+Final-layer ablation,Remove all direction components macro-F1 delta,-0.2889 [-0.3395, -0.2487],Real direction removal damages behavior
+Random ablation control,Norm-matched random macro-F1 delta,0.0002 [0.0000, 0.0038],Random directions do not reproduce the real ablation damage
+Mid-transformer intervention,Best sufficiency layer,layer 7; avg delta target probability +0.2545 at alpha 0.5,Forward-hook direction injection propagates through remaining transformer layers
+Mid-transformer intervention,Most damaging necessity layer,layer 8; avg macro-F1 delta -0.1513,Removing direction components inside the network damages downstream classification
+Mid-transformer random control,Fraction random vectors >= real steering,0.0 for all target emotions,Norm-matched random injection does not explain the causal effect
+Activation patching,Pairs analyzed / best patch layer,640 same-context ordered pairs / layer 11,"Same actor, sentence, intensity, and repetition; different emotion"
+Activation patching,Best-layer patch transfer,mean delta P(source) +0.6796 [0.6475, 0.7092]; flip rate 0.7562 [0.7219, 0.7891],Real hidden-state patching transfers emotion identity into destination clips
+Activation patching controls,Direction component patch,+0.6395 mean delta; 0.7266 flip rate,Most of the full patch effect is carried by the emotion-direction component
+Activation patching controls,Orthogonal residual patch,+0.0533 mean delta; 0.1094 flip rate,Non-direction residual has much weaker transfer
+Activation patching controls,Self patch / random source controls,+0.0002 / -0.0146 mean delta,Negative controls fail to reproduce transfer
+Activation patching,Patch vs centroid direction correlation,Pearson -0.0096; Spearman -0.0629,Full hidden-state patches carry richer pair-specific information than one population centroid direction
+Pair-specific geometry,Peak pair-vs-centroid cosine,layer 12; mean cosine 0.7490,Population directions become more faithful in late layers but remain incomplete
+Intensity patching,Peak strong-to-normal transfer,layer 11; mean delta P(emotion) +0.1883,Intensity is causally readable as graded emotion strength
+Per-test-actor sensitivity,Direction macro F1 range,0.7677-0.8771,Effects are present across held-out actors 21-24
+Cross-dataset transfer,CREMA-D macro F1,"trained 0.3498, centroid 0.3473, direction-only 0.3444",Clear domain shift from RAVDESS to CREMA-D
+Sparse autoencoder,Reconstruction and classifier preservation,cosine 0.9390; macro F1 0.8237 -> 0.8222,Exploratory SAE preserves classifier-relevant information

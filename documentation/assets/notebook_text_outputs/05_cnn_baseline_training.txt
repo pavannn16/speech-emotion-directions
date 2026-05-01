@@ -1,0 +1,279 @@
+# 05_cnn_baseline_training
+
+## Cell 1
+Running in Colab: True
+Required training packages are already available.
++ git -C /content/speech-emotion-directions fetch origin
+Using a clean code checkout because /content/speech-emotion-directions has local changes or local commits.
+ -  M data/metadata/ravdess_metadata.csv
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+Working directory: /content/speech-emotion-directions
+
+
+## Cell 2
+Existing local extracted wav files: 1440
+Drive RAVDESS wav cache: /content/drive/MyDrive/speech-emotion-directions/datasets/ravdess_audio_speech (1440 wavs)
+Local runtime already has complete RAVDESS audio; Drive cache is available as the persistent source.
+Extracted wav files: 1440
+Metadata saved to: /content/speech-emotion-directions/data/metadata/ravdess_metadata.csv
+Total speech clips: 1440
+Project clips: 1248
+
+             count
+final_label       
+angry          192
+disgust        192
+fearful        192
+happy          192
+neutral        288
+sad            192
+
+
+final_label  angry  disgust  fearful  happy  neutral  sad
+split                                                    
+test            32       32       32     32       48   32
+train          128      128      128    128      192  128
+val             32       32       32     32       48   32
+
+
+
+## Cell 3
+Config file: /content/speech-emotion-directions-clean/configs/cnn_baseline.yaml
+Metadata file: /content/speech-emotion-directions/data/metadata/ravdess_metadata.csv
+Output directory: /content/speech-emotion-directions/artifacts/checkpoints/cnn_baseline_ravdess_speaker_independent_v1
+Detected device: NVIDIA A100-SXM4-40GB
+{
+  "experiment_name": "cnn_baseline_ravdess_speaker_independent_v1",
+  "metadata_path": "/content/speech-emotion-directions/data/metadata/ravdess_metadata.csv",
+  "output_dir": "/content/speech-emotion-directions/artifacts/checkpoints/cnn_baseline_ravdess_speaker_independent_v1",
+  "sample_rate": 16000,
+  "n_mels": 64,
+  "n_fft": 400,
+  "hop_length": 160,
+  "win_length": 400,
+  "fmin": 0.0,
+  "fmax": 8000.0,
+  "target_frames": 600,
+  "batch_size": 32,
+  "eval_batch_size": 64,
+  "num_workers": 2,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "num_epochs": 30,
+  "early_stopping_patience": 6,
+  "dropout": 0.3,
+  "hidden_dim": 128,
+  "seed": 42,
+  "use_class_weights": false,
+  "max_train_samples": null,
+  "max_val_samples": null,
+  "max_test_samples": null
+}
+
+
+## Cell 4
+                                                      
+
+
+epoch=1 train_loss=1.7617 val_accuracy=0.2308 val_macro_f1=0.0637
+
+                                                      
+
+
+epoch=2 train_loss=1.6676 val_accuracy=0.3317 val_macro_f1=0.1611
+
+                                                      
+
+
+epoch=3 train_loss=1.6001 val_accuracy=0.3606 val_macro_f1=0.2803
+
+                                                      
+
+
+epoch=4 train_loss=1.5159 val_accuracy=0.3558 val_macro_f1=0.2036
+
+                                                      
+
+
+epoch=5 train_loss=1.4744 val_accuracy=0.1683 val_macro_f1=0.0702
+
+                                                      
+
+
+epoch=6 train_loss=1.4561 val_accuracy=0.2019 val_macro_f1=0.1187
+
+                                                      
+
+
+epoch=7 train_loss=1.4138 val_accuracy=0.1923 val_macro_f1=0.1034
+
+                                                      
+
+
+epoch=8 train_loss=1.3817 val_accuracy=0.2212 val_macro_f1=0.1691
+
+                                                      
+
+
+epoch=9 train_loss=1.3614 val_accuracy=0.3990 val_macro_f1=0.3177
+
+                                                      
+
+
+epoch=10 train_loss=1.3488 val_accuracy=0.3846 val_macro_f1=0.3183
+
+                                                      
+
+
+epoch=11 train_loss=1.3171 val_accuracy=0.4183 val_macro_f1=0.2889
+
+                                                      
+
+
+epoch=12 train_loss=1.3154 val_accuracy=0.4375 val_macro_f1=0.3722
+
+                                                      
+
+
+epoch=13 train_loss=1.2821 val_accuracy=0.2644 val_macro_f1=0.1202
+
+                                                      
+
+
+epoch=14 train_loss=1.2801 val_accuracy=0.4183 val_macro_f1=0.3081
+
+                                                      
+
+
+epoch=15 train_loss=1.2960 val_accuracy=0.2356 val_macro_f1=0.0730
+
+                                                      
+
+
+epoch=16 train_loss=1.2690 val_accuracy=0.3173 val_macro_f1=0.1993
+
+                                                      
+
+
+epoch=17 train_loss=1.2899 val_accuracy=0.2308 val_macro_f1=0.1664
+
+                                                      
+
+
+epoch=18 train_loss=1.2610 val_accuracy=0.3221 val_macro_f1=0.2410
+Early stopping triggered.
+
+                                                   
+
+
+Saved model and evaluation artifacts to /content/speech-emotion-directions/artifacts/checkpoints/cnn_baseline_ravdess_speaker_independent_v1
+Final val macro F1: 0.3722
+Final test macro F1: 0.3241
+
+
+
+
+
+## Cell 5
+Output directory: /content/speech-emotion-directions/artifacts/checkpoints/cnn_baseline_ravdess_speaker_independent_v1
+Exists: True
+config.json
+label_mapping.json
+model_state.pt
+test_classification_report.csv
+test_metrics.json
+test_predictions.csv
+val_metrics.json
+
+val_metrics.json
+{
+  "accuracy": 0.4375,
+  "macro_f1": 0.37218226812361666,
+  "weighted_f1": 0.39122350210327345
+}
+
+test_metrics.json
+{
+  "accuracy": 0.4230769230769231,
+  "macro_f1": 0.32411116130628326,
+  "weighted_f1": 0.3475926588496945
+}
+
+     Unnamed: 0  precision    recall  f1-score     support
+0       neutral   0.473684  0.937500  0.629371   48.000000
+1         happy   0.111111  0.031250  0.048780   32.000000
+2           sad   0.125000  0.031250  0.050000   32.000000
+3         angry   0.666667  0.187500  0.292683   32.000000
+4       fearful   0.333333  0.437500  0.378378   32.000000
+5       disgust   0.466667  0.656250  0.545455   32.000000
+6      accuracy   0.423077  0.423077  0.423077    0.423077
+7     macro avg   0.362744  0.380208  0.324111  208.000000
+8  weighted avg   0.371278  0.423077  0.347593  208.000000
+
+
+                  file_name  \
+0  03-01-01-01-01-01-21.wav   
+1  03-01-01-01-01-02-21.wav   
+2  03-01-01-01-02-01-21.wav   
+3  03-01-01-01-02-02-21.wav   
+4  03-01-02-01-01-01-21.wav   
+
+                                           file_path  actor_id  \
+0  /content/speech-emotion-directions/data/raw/ra...        21   
+1  /content/speech-emotion-directions/data/raw/ra...        21   
+2  /content/speech-emotion-directions/data/raw/ra...        21   
+3  /content/speech-emotion-directions/data/raw/ra...        21   
+4  /content/speech-emotion-directions/data/raw/ra...        21   
+
+   statement_code                     statement  emotion final_label  \
+0               1  Kids are talking by the door  neutral     neutral   
+1               1  Kids are talking by the door  neutral     neutral   
+2               2  Dogs are sitting by the door  neutral     neutral   
+3               2  Dogs are sitting by the door  neutral     neutral   
+4               1  Kids are talking by the door     calm     neutral   
+
+  intensity split  duration_seconds  true_label_id  pred_label_id true_label  \
+0    normal  test          3.837167              0              0    neutral   
+1    normal  test          3.970625              0              0    neutral   
+2    normal  test          3.603604              0              0    neutral   
+3    normal  test          3.670333              0              0    neutral   
+4    normal  test          4.037375              0              0    neutral   
+
+  pred_label  prob_neutral  prob_happy  prob_sad  prob_angry  prob_fearful  \
+0    neutral      0.632081    0.023207  0.117804    0.014704      0.004561   
+1    neutral      0.661560    0.014679  0.092364    0.010828      0.002050   
+2    neutral      0.493256    0.076208  0.189399    0.030964      0.030497   
+3    neutral      0.643894    0.031494  0.146603    0.011990      0.010666   
+4    neutral      0.806671    0.006808  0.095711    0.001894      0.001968   
+
+   prob_disgust  
+0      0.207644  
+1      0.218520  
+2      0.179676  
+3      0.155353  
+4      0.086948  
+
+
+
+## Cell 7
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+Backed up training artifacts to Google Drive:
+ - /content/drive/MyDrive/speech-emotion-directions/runs/cnn_baseline_ravdess_speaker_independent_v1/checkpoint
+ - /content/drive/MyDrive/speech-emotion-directions/runs/cnn_baseline_ravdess_speaker_independent_v1/metadata/ravdess_metadata.csv
+ - /content/drive/MyDrive/speech-emotion-directions/runs/cnn_baseline_ravdess_speaker_independent_v1/run_summary.md
+
+Drive backup contents:
+ [dir]  checkpoint
+ [file] checkpoint/config.json
+ [file] checkpoint/label_mapping.json
+ [file] checkpoint/model_state.pt
+ [file] checkpoint/test_classification_report.csv
+ [file] checkpoint/test_metrics.json
+ [file] checkpoint/test_predictions.csv
+ [file] checkpoint/val_metrics.json
+ [dir]  metadata
+ [file] metadata/ravdess_metadata.csv
+ [file] run_summary.md
+

@@ -1,0 +1,273 @@
+# 02_wav2vec_finetuning
+
+## Cell 1
+Running in Colab: True
+Required training packages are already available.
++ git -C /content/speech-emotion-directions fetch origin
+Using a clean code checkout because /content/speech-emotion-directions has local changes or local commits.
+ -  M data/metadata/ravdess_metadata.csv
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+Working directory: /content/speech-emotion-directions
+
+
+## Cell 2
+Existing local extracted wav files: 1440
+Drive RAVDESS wav cache: /content/drive/MyDrive/speech-emotion-directions/datasets/ravdess_audio_speech (1440 wavs)
+Local runtime already has complete RAVDESS audio; Drive cache is available as the persistent source.
+Extracted wav files: 1440
+Metadata saved to: /content/speech-emotion-directions/data/metadata/ravdess_metadata.csv
+Total speech clips: 1440
+Project clips: 1248
+
+             count
+final_label       
+angry          192
+disgust        192
+fearful        192
+happy          192
+neutral        288
+sad            192
+
+
+final_label  angry  disgust  fearful  happy  neutral  sad
+split                                                    
+test            32       32       32     32       48   32
+train          128      128      128    128      192  128
+val             32       32       32     32       48   32
+
+
+
+## Cell 3
+Config file: /content/speech-emotion-directions/configs/wav2vec.yaml
+Metadata file: /content/speech-emotion-directions/data/metadata/ravdess_metadata.csv
+Output directory: /content/speech-emotion-directions/artifacts/checkpoints/wav2vec_ravdess_speaker_independent_v1
+Detected device: NVIDIA A100-SXM4-40GB
+{
+  "experiment_name": "wav2vec_ravdess_speaker_independent_v1",
+  "metadata_path": "/content/speech-emotion-directions/data/metadata/ravdess_metadata.csv",
+  "output_dir": "/content/speech-emotion-directions/artifacts/checkpoints/wav2vec_ravdess_speaker_independent_v1",
+  "backbone_name": "facebook/wav2vec2-base",
+  "sample_rate": 16000,
+  "batch_size": 8,
+  "eval_batch_size": 16,
+  "num_workers": 2,
+  "learning_rate": 2e-05,
+  "weight_decay": 0.01,
+  "warmup_ratio": 0.1,
+  "num_epochs": 12,
+  "early_stopping_patience": 4,
+  "gradient_accumulation_steps": 1,
+  "dropout": 0.2,
+  "seed": 42,
+  "freeze_feature_encoder": false,
+  "freeze_feature_encoder_epochs": 1,
+  "use_class_weights": false,
+  "max_train_samples": null,
+  "max_val_samples": null,
+  "max_test_samples": null
+}
+
+
+## Cell 4
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+
+preprocessor_config.json:   0%|          | 0.00/159 [00:00<?, ?B/s]
+
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+config.json: 0.00B [00:00, ?B/s]
+
+
+pytorch_model.bin:   0%|          | 0.00/380M [00:00<?, ?B/s]
+
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+project_q.weight             | UNEXPECTED |  | 
+project_hid.weight           | UNEXPECTED |  | 
+project_hid.bias             | UNEXPECTED |  | 
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+quantizer.codevectors        | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+train:   0%|          | 0/104 [00:00<?, ?it/s]
+
+
+model.safetensors:   0%|          | 0.00/380M [00:00<?, ?B/s]
+
+
+                                                        
+
+
+epoch=1 train_loss=1.7047 val_accuracy=0.3846 val_macro_f1=0.2397
+
+                                                        
+
+
+epoch=2 train_loss=1.2342 val_accuracy=0.5673 val_macro_f1=0.4962
+
+                                                        
+
+
+epoch=3 train_loss=0.7715 val_accuracy=0.6971 val_macro_f1=0.6626
+
+                                                        
+
+
+epoch=4 train_loss=0.4252 val_accuracy=0.7212 val_macro_f1=0.6965
+
+                                                        
+
+
+epoch=5 train_loss=0.2267 val_accuracy=0.7260 val_macro_f1=0.7279
+
+                                                        
+
+
+epoch=6 train_loss=0.1524 val_accuracy=0.7644 val_macro_f1=0.7582
+
+                                                        
+
+
+epoch=7 train_loss=0.1099 val_accuracy=0.7356 val_macro_f1=0.7334
+
+                                                        
+
+
+epoch=8 train_loss=0.0633 val_accuracy=0.7837 val_macro_f1=0.7739
+
+                                                        
+
+
+epoch=9 train_loss=0.0478 val_accuracy=0.7740 val_macro_f1=0.7667
+
+                                                        
+
+
+epoch=10 train_loss=0.0419 val_accuracy=0.7788 val_macro_f1=0.7660
+
+                                                        
+
+
+epoch=11 train_loss=0.0294 val_accuracy=0.7740 val_macro_f1=0.7657
+
+                                                        
+
+
+epoch=12 train_loss=0.0292 val_accuracy=0.7885 val_macro_f1=0.7762
+
+                                                     
+
+
+Saved model and evaluation artifacts to /content/speech-emotion-directions/artifacts/checkpoints/wav2vec_ravdess_speaker_independent_v1
+Final val macro F1: 0.7762
+Final test macro F1: 0.8126
+
+
+## Cell 5
+Output directory: /content/speech-emotion-directions/artifacts/checkpoints/wav2vec_ravdess_speaker_independent_v1
+Exists: True
+config.json
+feature_extractor
+label_mapping.json
+model_state.pt
+test_classification_report.csv
+test_metrics.json
+test_predictions.csv
+val_metrics.json
+
+val_metrics.json
+{
+  "accuracy": 0.7884615384615384,
+  "macro_f1": 0.7762049724578949,
+  "weighted_f1": 0.784189205345749
+}
+
+test_metrics.json
+{
+  "accuracy": 0.8269230769230769,
+  "macro_f1": 0.8126150695019793,
+  "weighted_f1": 0.8209961124211331
+}
+config.json
+feature_extractor
+label_mapping.json
+model_state.pt
+test_classification_report.csv
+test_metrics.json
+test_predictions.csv
+val_metrics.json
+
+val_metrics.json
+{
+  "accuracy": 0.7884615384615384,
+  "macro_f1": 0.7762049724578949,
+  "weighted_f1": 0.784189205345749
+}
+
+test_metrics.json
+{
+  "accuracy": 0.8269230769230769,
+  "macro_f1": 0.8126150695019793,
+  "weighted_f1": 0.8209961124211331
+}
+
+
+## Cell 7
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+Backed up training artifacts to Google Drive:
+ - /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+ - /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/metadata/ravdess_metadata.csv
+ - /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/run_summary.md
+
+Drive backup contents:
+ [dir]  analysis
+ [dir]  analysis/eda
+ [file] analysis/eda/duration_analysis.png
+ [file] analysis/eda/duration_summary.csv
+ [file] analysis/eda/final_6_class_label_counts.csv
+ [file] analysis/eda/final_6_class_label_counts.png
+ [file] analysis/eda/intensity_label_counts.csv
+ [file] analysis/eda/metadata_preview.csv
+ [file] analysis/eda/original_label_counts.csv
+ [file] analysis/eda/original_label_counts.png
+ [file] analysis/eda/split_actor_table.csv
+ [file] analysis/eda/split_label_counts.csv
+ [file] analysis/eda/split_verification.png
+ [file] analysis/eda/statement_label_counts.csv
+ [file] analysis/eda/waveform_mel_sample_angry.png
+ [file] analysis/eda/waveform_mel_sample_disgust.png
+ [file] analysis/eda/waveform_mel_sample_fearful.png
+ [file] analysis/eda/waveform_mel_sample_happy.png
+ [file] analysis/eda/waveform_mel_sample_neutral.png
+ [file] analysis/eda/waveform_mel_sample_sad.png
+ [file] analysis/eda/waveform_sample_rows.csv
+ [dir]  checkpoint
+ [file] checkpoint/config.json
+ [dir]  checkpoint/feature_extractor
+ [file] checkpoint/feature_extractor/preprocessor_config.json
+ [file] checkpoint/label_mapping.json
+ [file] checkpoint/model_state.pt
+ [file] checkpoint/test_classification_report.csv
+ [file] checkpoint/test_metrics.json
+ [file] checkpoint/test_predictions.csv
+ [file] checkpoint/val_metrics.json
+ [dir]  metadata
+ [file] metadata/ravdess_metadata.csv
+ [file] run_summary.md
+

@@ -1,0 +1,338 @@
+# 07_anthropic_style_emotion_vectors
+
+## Cell 1
+Running in Colab: True
+Required analysis packages are already available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
+Using a clean code checkout because /content/speech-emotion-directions has local changes or local commits.
+ -  M data/metadata/ravdess_metadata.csv
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+Working directory: /content/speech-emotion-directions
+
+
+## Cell 2
+Checkpoint source: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/checkpoint
+Analysis source: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis
+Metadata source: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/ravdess_metadata_resolved.csv
+Output directory: /content/speech-emotion-directions/artifacts/analysis/wav2vec_ravdess_speaker_independent_v1/anthropic_style
+Drive output directory: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/anthropic_style
+
+
+## Cell 3
+                    variant split  accuracy  macro_f1  weighted_f1
+0                       raw   val    0.7837    0.7741       0.7811
+1                       raw  test    0.8365    0.8237       0.8312
+2            actor_centered   val    0.7837    0.7723       0.7797
+3            actor_centered  test    0.8462    0.8339       0.8406
+4  actor_statement_centered   val    0.7837    0.7723       0.7797
+5  actor_statement_centered  test    0.8462    0.8339       0.8406
+
+
+
+## Cell 4
+[figure: 07_anthropic_style_emotion_vectors_cell_04_fig_01_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 800x500 with 1 Axes>
+
+
+
+## Cell 5
+  target_label  num_samples_all  pearson_all  num_samples_true_subset  \
+0        happy              208       0.6812                       32   
+1          sad              208       0.7150                       32   
+2        angry              208       0.7711                       32   
+3      fearful              208       0.6884                       32   
+4      disgust              208       0.7190                       32   
+
+   pearson_true_subset  mean_projection_all  mean_probability_all  
+0               0.7577                  0.0                0.1534  
+1               0.8367                  0.0                0.1512  
+2               0.6701                  0.0                0.1870  
+3               0.9525                  0.0                0.0995  
+4               0.8985                  0.0                0.1543  
+
+
+[figure: 07_anthropic_style_emotion_vectors_cell_05_fig_02_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 2200x400 with 5 Axes>
+
+
+
+## Cell 6
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+project_hid.weight           | UNEXPECTED |  | 
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+project_hid.bias             | UNEXPECTED |  | 
+quantizer.codevectors        | UNEXPECTED |  | 
+project_q.weight             | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+   target_label  alpha  mean_target_prob_all  delta_target_prob_all  \
+0         happy  -1.00                0.0004                -0.1530   
+1         happy  -0.50                0.0452                -0.1083   
+2         happy  -0.25                0.1132                -0.0403   
+3         happy   0.00                0.1534                 0.0000   
+4         happy   0.25                0.2120                 0.0585   
+5         happy   0.50                0.3586                 0.2052   
+6         happy   1.00                0.7288                 0.5754   
+7           sad  -1.00                0.0004                -0.1508   
+8           sad  -0.50                0.0411                -0.1101   
+9           sad  -0.25                0.1061                -0.0451   
+10          sad   0.00                0.1512                 0.0000   
+11          sad   0.25                0.2144                 0.0632   
+12          sad   0.50                0.3616                 0.2104   
+13          sad   1.00                0.6832                 0.5320   
+14        angry  -1.00                0.0004                -0.1867   
+15        angry  -0.50                0.0726                -0.1145   
+16        angry  -0.25                0.1581                -0.0290   
+17        angry   0.00                0.1870                 0.0000   
+18        angry   0.25                0.2245                 0.0375   
+19        angry   0.50                0.3777                 0.1907   
+20        angry   1.00                0.8464                 0.6594   
+21      fearful  -1.00                0.0002                -0.0993   
+22      fearful  -0.50                0.0367                -0.0628   
+23      fearful  -0.25                0.0782                -0.0213   
+24      fearful   0.00                0.0995                 0.0000   
+25      fearful   0.25                0.1381                 0.0386   
+26      fearful   0.50                0.2913                 0.1918   
+27      fearful   1.00                0.7780                 0.6785   
+28      disgust  -1.00                0.0004                -0.1539   
+29      disgust  -0.50                0.0525                -0.1018   
+30      disgust  -0.25                0.1225                -0.0318   
+31      disgust   0.00                0.1543                 0.0000   
+32      disgust   0.25                0.1905                 0.0362   
+33      disgust   0.50                0.3169                 0.1626   
+34      disgust   1.00                0.6967                 0.5424   
+
+    pred_as_target_rate_all  mean_target_prob_true_subset  \
+0                    0.0000                        0.0018   
+1                    0.0288                        0.2191   
+2                    0.1298                        0.5521   
+3                    0.1538                        0.7047   
+4                    0.1971                        0.8040   
+5                    0.3077                        0.8766   
+6                    0.7644                        0.9634   
+7                    0.0000                        0.0019   
+8                    0.0192                        0.2056   
+9                    0.1250                        0.5461   
+10                   0.1490                        0.7170   
+11                   0.1779                        0.8030   
+12                   0.3654                        0.9054   
+13                   0.5962                        0.9904   
+14                   0.0000                        0.0020   
+15                   0.0769                        0.4106   
+16                   0.1731                        0.8682   
+17                   0.1827                        0.9637   
+18                   0.1971                        0.9887   
+19                   0.3365                        0.9972   
+20                   0.9712                        0.9999   
+21                   0.0000                        0.0014   
+22                   0.0625                        0.2220   
+23                   0.0817                        0.4668   
+24                   0.0962                        0.5620   
+25                   0.1106                        0.6385   
+26                   0.2788                        0.7358   
+27                   0.9183                        0.9410   
+28                   0.0000                        0.0026   
+29                   0.0144                        0.3180   
+30                   0.1490                        0.7253   
+31                   0.1587                        0.8587   
+32                   0.1683                        0.9005   
+33                   0.2644                        0.9253   
+34                   0.6827                        0.9695   
+
+    delta_target_prob_true_subset  pred_as_target_rate_true_subset  
+0                         -0.7029                           0.0000  
+1                         -0.4856                           0.0938  
+2                         -0.1526                           0.6250  
+3                          0.0000                           0.7500  
+4                          0.0993                           0.8438  
+5                          0.1719                           0.8750  
+6                          0.2587                           1.0000  
+7                         -0.7151                           0.0000  
+8                         -0.5114                           0.0625  
+9                         -0.1709                           0.6562  
+10                         0.0000                           0.7500  
+11                         0.0860                           0.7812  
+12                         0.1883                           0.9688  
+13                         0.2734                           1.0000  
+14                        -0.9617                           0.0000  
+15                        -0.5530                           0.4375  
+16                        -0.0955                           0.9688  
+17                         0.0000                           0.9688  
+18                         0.0250                           1.0000  
+19                         0.0335                           1.0000  
+20                         0.0362                           1.0000  
+21                        -0.5607                           0.0000  
+22                        -0.3400                           0.3750  
+23                        -0.0952                           0.5000  
+24                         0.0000                           0.5938  
+25                         0.0765                           0.5938  
+26                         0.1738                           0.7500  
+27                         0.3789                           1.0000  
+28                        -0.8561                           0.0000  
+29                        -0.5407                           0.0938  
+30                        -0.1334                           0.8750  
+31                         0.0000                           0.9062  
+32                         0.0418                           0.9062  
+33                         0.0666                           0.9062  
+34                         0.1108                           0.9688  
+
+
+[figure: 07_anthropic_style_emotion_vectors_cell_06_fig_03_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+
+## Cell 7
+  true_label  count  mean_expected_projection  \
+0      happy     32                   11.9783   
+1        sad     32                   10.5661   
+2      angry     32                   15.5851   
+3    fearful     32                   13.1614   
+4    disgust     32                   14.2561   
+
+   mean_cosine_to_expected_direction  match_rate  
+0                             0.8591      0.7812  
+1                             0.8203      0.8125  
+2                             0.9686      1.0000  
+3                             0.8151      0.6250  
+4                             0.9220      0.9062  
+
+
+[figure: 07_anthropic_style_emotion_vectors_cell_07_fig_04_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 900x500 with 1 Axes>
+
+
+
+## Cell 8
+  true_label intensity  mean_expected_projection  median_expected_projection  \
+0      angry    normal                    7.8942                      8.7001   
+1      angry    strong                    8.7055                      8.8071   
+2    disgust    normal                    7.8623                      8.1420   
+3    disgust    strong                    8.1366                      8.1699   
+4    fearful    normal                    8.1853                      9.1369   
+5    fearful    strong                    8.9099                      9.1768   
+6      happy    normal                    7.0324                      7.7781   
+7      happy    strong                    7.7776                      8.1538   
+8        sad    normal                    6.1356                      7.9378   
+9        sad    strong                    7.8369                      8.3787   
+
+   count  
+0     96  
+1     96  
+2     96  
+3     96  
+4     96  
+5     96  
+6     96  
+7     96  
+8     96  
+9     96  
+
+
+  true_label  count  mean_strong_minus_normal  median_strong_minus_normal  \
+0      angry     96                    0.8113                      0.0612   
+1    disgust     96                    0.2742                     -0.0072   
+2    fearful     96                    0.7245                      0.0379   
+3      happy     96                    0.7452                      0.3996   
+4        sad     96                    1.7014                      0.3116   
+
+   positive_rate  
+0         0.6562  
+1         0.5000  
+2         0.5938  
+3         0.7604  
+4         0.6875  
+
+
+[figure: 07_anthropic_style_emotion_vectors_cell_08_fig_05_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+
+## Cell 9
+[figure: 07_anthropic_style_emotion_vectors_cell_09_fig_06_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 1000x800 with 1 Axes>
+
+
+[figure: 07_anthropic_style_emotion_vectors_cell_09_fig_07_anthropic_style_emotion_vector_analysis.png]
+
+<Figure size 1000x800 with 1 Axes>
+
+
+
+## Cell 10
+Anthropic-style analysis directory: /content/speech-emotion-directions/artifacts/analysis/wav2vec_ravdess_speaker_independent_v1/anthropic_style
+bidirectional_steering_curves.png
+bidirectional_steering_summary.csv
+centering_strategy_comparison.csv
+centering_strategy_test_macro_f1.png
+emotion_centroid_pca_arrows.png
+emotion_centroid_pca_coordinates.csv
+emotion_direction_pca_coordinates.csv
+emotion_direction_pca_vectors.png
+emotion_vector_pca_points.csv
+intensity_projection_boxplot.png
+intensity_projection_summary.csv
+intensity_projection_values.csv
+paired_intensity_projection_deltas.csv
+paired_intensity_projection_summary.csv
+projection_probability_correlations.csv
+projection_probability_pairs.csv
+projection_probability_scatter_grid.png
+same_context_displacement_summary.csv
+same_context_displacements.csv
+same_context_match_rate.png
+
+
+## Cell 11
+Backed up Anthropic-style analysis artifacts to Google Drive:
+ - /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/anthropic_style
+
+Drive output contents:
+ [file] bidirectional_steering_curves.png
+ [file] bidirectional_steering_summary.csv
+ [file] centering_strategy_comparison.csv
+ [file] centering_strategy_test_macro_f1.png
+ [file] emotion_centroid_pca_arrows.png
+ [file] emotion_centroid_pca_coordinates.csv
+ [file] emotion_direction_pca_coordinates.csv
+ [file] emotion_direction_pca_vectors.png
+ [file] emotion_vector_pca_points.csv
+ [file] intensity_projection_boxplot.png
+ [file] intensity_projection_summary.csv
+ [file] intensity_projection_values.csv
+ [file] paired_intensity_projection_deltas.csv
+ [file] paired_intensity_projection_summary.csv
+ [file] projection_probability_correlations.csv
+ [file] projection_probability_pairs.csv
+ [file] projection_probability_scatter_grid.png
+ [file] same_context_displacement_summary.csv
+ [file] same_context_displacements.csv
+ [file] same_context_match_rate.png
+

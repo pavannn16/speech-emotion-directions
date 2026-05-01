@@ -1,0 +1,113 @@
+# 12_layerwise_steering
+
+## Cell 1
+Running in Colab: True
+Required packages available.
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
++ git -C /content/speech-emotion-directions fetch origin
++ git clone --depth 1 https://github.com/pavannn16/speech-emotion-directions.git /content/speech-emotion-directions-clean
+Project root: /content/speech-emotion-directions
+Code root: /content/speech-emotion-directions-clean
+
+
+## Cell 2
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/utils/_auth.py:103: UserWarning: 
+Error while fetching `HF_TOKEN` secret value from your vault: 'Requesting secret HF_TOKEN timed out. Secrets can only be fetched when running from the Colab UI.'.
+You are not authenticated with the Hugging Face Hub in this notebook.
+If the error persists, please let us know by opening an issue on GitHub (https://github.com/huggingface/huggingface_hub/issues/new).
+  warnings.warn(
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/211 [00:00<?, ?it/s]
+
+
+Wav2Vec2Model LOAD REPORT from: facebook/wav2vec2-base
+Key                          | Status     |  | 
+-----------------------------+------------+--+-
+quantizer.weight_proj.bias   | UNEXPECTED |  | 
+quantizer.weight_proj.weight | UNEXPECTED |  | 
+quantizer.codevectors        | UNEXPECTED |  | 
+project_hid.weight           | UNEXPECTED |  | 
+project_hid.bias             | UNEXPECTED |  | 
+project_q.weight             | UNEXPECTED |  | 
+project_q.bias               | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+
+Total layers: 13
+
+
+## Cell 4
+Layerwise directions shape: (13, 6, 768)
+
+    injection_layer target_label  alpha  mean_delta_target_prob  \
+0                 0        happy    0.5                 -0.0003   
+1                 0          sad    0.5                  0.0000   
+2                 0        angry    0.5                  0.0002   
+3                 0      fearful    0.5                  0.0002   
+4                 0      disgust    0.5                 -0.0002   
+..              ...          ...    ...                     ...   
+60               12        happy    0.5                  0.2052   
+61               12          sad    0.5                  0.2104   
+62               12        angry    0.5                  0.1907   
+63               12      fearful    0.5                  0.1918   
+64               12      disgust    0.5                  0.1626   
+
+    mean_target_prob_steered  pred_as_target_rate  
+0                     0.1531               0.1538  
+1                     0.1512               0.1490  
+2                     0.1872               0.1827  
+3                     0.0997               0.0962  
+4                     0.1541               0.1587  
+..                       ...                  ...  
+60                    0.3586               0.3077  
+61                    0.3616               0.3654  
+62                    0.3777               0.3365  
+63                    0.2913               0.2788  
+64                    0.3169               0.2644  
+
+[65 rows x 6 columns]
+
+
+
+## Cell 5
+[figure: 12_layerwise_steering_cell_05_fig_01_build_layer_wise_directions_and_evaluate_steering.png]
+
+<Figure size 1000x800 with 2 Axes>
+
+
+
+## Cell 6
+[figure: 12_layerwise_steering_cell_06_fig_02_build_layer_wise_directions_and_evaluate_steering.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+[figure: 12_layerwise_steering_cell_06_fig_03_build_layer_wise_directions_and_evaluate_steering.png]
+
+<Figure size 1000x500 with 1 Axes>
+
+
+
+## Cell 8
+Best steering layer: 12, Worst: 1
+
+[figure: 12_layerwise_steering_cell_08_fig_04_multi_alpha_sweep_at_best_vs_worst_layer.png]
+
+<Figure size 1400x500 with 2 Axes>
+
+
+
+## Cell 9
+Backed up to: /content/drive/MyDrive/speech-emotion-directions/runs/wav2vec_ravdess_speaker_independent_v1/analysis/layerwise_steering
+
+Output files:
+  best_worst_layer_alpha_sweep.csv
+  best_worst_layer_sweep.png
+  layerwise_steering_average.png
+  layerwise_steering_heatmap.png
+  layerwise_steering_per_emotion.png
+  layerwise_steering_results.csv
+
