@@ -325,4 +325,4 @@ Every notebook from `01` through `16` has saved outputs and zero stored errors.
 
 ## Appendix B. Persisted Result Assets
 
-The report uses figures extracted from executed notebooks and stored under `documentation/assets/figures/`. The Overleaf-ready LaTeX source lives under `documentation/finalprojectDSlatexsource/` with all referenced figures copied into `documentation/finalprojectDSlatexsource/figures/`.
+The report uses figures extracted from executed notebooks and stored under `documentation/assets/figures/`. The repository keeps the durable Markdown report, extracted figures, notebook text outputs, and compact result tables; local LaTeX/Overleaf source exports are intentionally excluded from version control.

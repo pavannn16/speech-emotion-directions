@@ -263,10 +263,6 @@ The model learns to predict emotion labels, but the prediction is mediated by hi
 ├── documentation/
 │   ├── README.md
 │   ├── research_report.md
-│   ├── finalprojectDSlatexsource/
-│   │   ├── main.tex
-│   │   ├── references.bib
-│   │   └── figures/
 │   ├── presentation/
 │   │   └── presentation_plan.md
 │   └── assets/
@@ -322,8 +318,6 @@ Recommended reading paths:
 The `documentation/` directory contains the polished project deliverables:
 
 - `documentation/research_report.md`: detailed paper-style report.
-- `documentation/finalprojectDSlatexsource/main.tex`: IEEE-style LaTeX report for Overleaf.
-- `documentation/finalprojectDSlatexsource/references.bib`: report references.
 - `documentation/presentation/presentation_plan.md`: 30-minute, 5-person presentation plan.
 - `documentation/assets/figures/`: extracted notebook figures used in reports/slides.
 - `documentation/assets/tables/key_results.csv`: compact table of headline metrics.
@@ -411,4 +405,3 @@ This project is best summarized as:
 Or shorter:
 
 > **Emotion in this speech model is not a feeling; it is a causal geometry in hidden state space.**
-
